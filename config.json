@@ -1,0 +1,15 @@
+{
+  "number_starting_graph": 10,
+  "number_normal_node": 100,
+  "number_edge_new_node": 2,
+  "probability_add_triangle": 0.5,
+  "probability_add_random_edge": 0.3,
+  "rank_to_capacity": [
+    100,
+    40,
+    16,
+    6,
+    2,
+    1
+  ]
+}
