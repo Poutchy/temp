@@ -100,12 +100,12 @@ def sample_datarow(graph, n_bots, req_length):
     Random_pre_scores_freenet = personalized_random_walk(
         graph_pre, np.random.RandomState(42), victim, req_length
     )
-    Random_pre_ranks_freenet = rankdata(Random_pre_scores_freenet)
+    Random_pre_ranks_freenet = rankdata(Random_pre_scores_freenet[:N])
 
     Random_post_scores_freenet = personalized_random_walk(
         graph_post, np.random.RandomState(42), victim, req_length
     )
-    Random_post_ranks_freenet = rankdata(Random_post_scores_freenet)
+    Random_post_ranks_freenet = rankdata(Random_post_scores_freenet[:N])
 
     datarow = {
         "FreeNet_pre_score": FreeNet_pre_scores_freenet[villain],
