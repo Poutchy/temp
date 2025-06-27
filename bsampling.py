@@ -156,45 +156,45 @@ def sample_datarow(graph, n_bots, req_length):
     FreeNet_pre_scores_freenet = [
         compute_wot_score(graph_pre, victim, trustee) for trustee in range(N)
     ]
-    FreeNet_pre_ranks_freenet = rankdata(FreeNet_pre_scores_freenet)
+    FreeNet_pre_ranks_freenet = rankdata(FreeNet_pre_scores_freenet, method="min")
 
     FreeNet_post_scores_freenet = [
         compute_wot_score(graph_post, victim, trustee) for trustee in range(N)
     ]
-    FreeNet_post_ranks_freenet = rankdata(FreeNet_post_scores_freenet)
+    FreeNet_post_ranks_freenet = rankdata(FreeNet_post_scores_freenet, method="min")
 
     # Compute Reversed freenet WoT scores
     Reversed_pre_scores_freenet = [
         compute_wot_score_rev(graph_pre, victim, trustee) for trustee in range(N)
     ]
-    Reversed_pre_ranks_freenet = rankdata(Reversed_pre_scores_freenet)
+    Reversed_pre_ranks_freenet = rankdata(Reversed_pre_scores_freenet, method="min")
 
     Reversed_post_scores_freenet = [
         compute_wot_score_rev(graph_post, victim, trustee) for trustee in range(N)
     ]
-    Reversed_post_ranks_freenet = rankdata(Reversed_post_scores_freenet)
+    Reversed_post_ranks_freenet = rankdata(Reversed_post_scores_freenet, method="min")
 
     # # Compute Independent freenet WoT scores
     # Independent_pre_scores_freenet = [
     #     compute_wot_score_indep(graph_pre, victim, trustee) for trustee in range(N)
     # ]
-    # Independent_pre_ranks_freenet = rankdata(Independent_pre_scores_freenet)
+    # Independent_pre_ranks_freenet = rankdata(Independent_pre_scores_freenet, method="min")
 
     # Independent_post_scores_freenet = [
     #     compute_wot_score_indep(graph_post, victim, trustee) for trustee in range(N)
     # ]
-    # Independent_post_ranks_freenet = rankdata(Independent_post_scores_freenet)
+    # Independent_post_ranks_freenet = rankdata(Independent_post_scores_freenet, method="min")
 
     # Compute Random walk WoT scores
     Random_pre_scores_freenet = personalized_random_walk(
         graph_pre, np.random.RandomState(42), victim, req_length
     )
-    Random_pre_ranks_freenet = rankdata(Random_pre_scores_freenet[:N])
+    Random_pre_ranks_freenet = rankdata(Random_pre_scores_freenet[:N], method="min")
 
     Random_post_scores_freenet = personalized_random_walk(
         graph_post, np.random.RandomState(42), victim, req_length
     )
-    Random_post_ranks_freenet = rankdata(Random_post_scores_freenet[:N])
+    Random_post_ranks_freenet = rankdata(Random_post_scores_freenet[:N], method="min")
 
     datarow = {
         "FreeNet_pre_score": FreeNet_pre_scores_freenet[villain],
@@ -222,6 +222,8 @@ def sample_datarow(graph, n_bots, req_length):
         "Random_delta_ranks": Random_post_ranks_freenet[villain]
         - Random_pre_ranks_freenet[villain],
         "dist_victim_relayer": get_distance_in_graph(graph_pre, victim, relayer),
+        "dist_victim_vilain_pre": get_distance_in_graph(graph_pre, victim, villain),
+        "dist_victim_vilain_post": get_distance_in_graph(graph_post, victim, villain),
         "out_deg_victim": graph_pre.out_degree(victim),
         "in_deg_villain": graph_pre.in_degree(villain),
         "victim": victim,
@@ -259,7 +261,7 @@ def main():
         nx.set_edge_attributes(graph, 1.0, "capacity")
 
     num_rows = 1000
-    num_file = 10
+    num_file = 100
     r_l = required_length(5, 0.85)
     for i in range(num_file):
         print("start iteration: ", i)
@@ -270,7 +272,7 @@ def main():
         data = pd.DataFrame(data)
         # data.head(5)
         # 30 min per iterations
-        data.to_csv(f"bdata/computation{i}.csv")
+        data.to_csv(f"bdata/computation{str(i).zfill(2)}.csv")
         print("end iteration: ", i)
 
 
