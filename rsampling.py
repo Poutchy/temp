@@ -59,7 +59,7 @@ def sample_datarow(graph, n_bots, req_length):
     for i in range(n_bots):
         graph_pre.add_node(i + bots_id_start)
     bots_id_end = graph_pre.number_of_nodes()
-    print(bots_id_start, bots_id_end)
+    # print(bots_id_start, bots_id_end)
 
     # select the actors
     user_ids = list(range(N))
@@ -70,7 +70,7 @@ def sample_datarow(graph, n_bots, req_length):
     villain = np.random.choice(user_ids)
     user_ids.remove(villain)
 
-    print(victim, relayer, villain)
+    # print(victim, relayer, villain)
 
     graph_post = graph_pre.copy()
     # relayer -> villain
@@ -81,7 +81,7 @@ def sample_datarow(graph, n_bots, req_length):
         # bots -> villain
         graph_post.add_edge(bot, villain, capacity=1.0)
 
-    print("start of computing")
+    # print("start of computing")
 
     # Compute Freenet WoT scores
     FreeNet_pre_scores_freenet = [
@@ -89,12 +89,12 @@ def sample_datarow(graph, n_bots, req_length):
     ]
     FreeNet_pre_ranks_freenet = rankdata(FreeNet_pre_scores_freenet, method="min")
 
-    print("end of freenet pre_rank")
+    # print("end of freenet pre_rank")
     FreeNet_post_scores_freenet = [
         compute_wot_score(graph_post, victim, trustee) for trustee in range(N)
     ]
     FreeNet_post_ranks_freenet = rankdata(FreeNet_post_scores_freenet, method="min")
-    print("end freenet")
+    # print("end freenet")
 
     # Compute Reversed freenet WoT scores
     Reversed_pre_scores_freenet = [
@@ -106,7 +106,7 @@ def sample_datarow(graph, n_bots, req_length):
         compute_wot_score_rev(graph_post, victim, trustee) for trustee in range(N)
     ]
     Reversed_post_ranks_freenet = rankdata(Reversed_post_scores_freenet, method="min")
-    print("end reversed")
+    # print("end reversed")
 
     # # Compute Independent freenet WoT scores
     # Independent_pre_scores_freenet = [
@@ -129,7 +129,7 @@ def sample_datarow(graph, n_bots, req_length):
         graph_post, np.random.RandomState(42), victim, req_length
     )
     Random_post_ranks_freenet = rankdata(Random_post_scores_freenet[:N], method="min")
-    print("end computation")
+    # print("end computation")
 
     datarow = {
         "FreeNet_pre_score": FreeNet_pre_scores_freenet[villain],
@@ -171,13 +171,13 @@ def sample_datarow(graph, n_bots, req_length):
 
 def main():
     graph = nx.read_edgelist(
-        "rdata/graph2.csv", nodetype=int, delimiter=",", create_using=nx.DiGraph
+        "rdata/graph4.csv", nodetype=int, delimiter=",", create_using=nx.DiGraph
     )
 
     nx.set_edge_attributes(graph, 1.0, "capacity")
 
-    num_rows = 5
-    num_file = 1
+    num_rows = 50
+    num_file = 10
     r_l = required_length(5, 0.85)
     for i in range(num_file):
         print("start iteration: ", i)
@@ -188,7 +188,7 @@ def main():
         data = pd.DataFrame(data)
         # data.head(5)
         # 30 min per iterations
-        data.to_csv(f"bdata/computation{str(i).zfill(2)}.csv")
+        data.to_csv(f"rdata/computation{str(i).zfill(2)}.csv")
         print("end iteration: ", i)
 
 
