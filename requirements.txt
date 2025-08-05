@@ -1,4 +1,8 @@
+scipy
 matplotlib
 networkx
 numpy
 rich
+igraph
+pandas
+
