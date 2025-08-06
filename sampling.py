@@ -171,20 +171,23 @@ def main():
         graph = nx.read_adjlist(graph_fname, nodetype=int, create_using=nx.DiGraph)
         nx.set_edge_attributes(graph, 1.0, "capacity")
 
-    num_rows = 1000
-    num_file = 100
-    r_l = required_length(5, 0.85)
-    for i in range(num_file):
-        print("start iteration: ", i)
-        data = [
-            (print(_), sample_datarow(graph, n_bots=100, req_length=r_l))[1]
-            for _ in range(num_rows)
-        ]
-        data = pd.DataFrame(data)
-        # data.head(5)
-        # 30 min per iterations
-        data.to_csv(f"data/computation{str(i).zfill(2)}.csv")
-        print("end iteration: ", i)
+    print(graph.number_of_nodes())
+    print(graph.number_of_edges())
+
+    # num_rows = 1000
+    # num_file = 100
+    # r_l = required_length(5, 0.85)
+    # for i in range(num_file):
+    #     print("start iteration: ", i)
+    #     data = [
+    #         (print(_), sample_datarow(graph, n_bots=100, req_length=r_l))[1]
+    #         for _ in range(num_rows)
+    #     ]
+    #     data = pd.DataFrame(data)
+    #     # data.head(5)
+    #     # 30 min per iterations
+    #     data.to_csv(f"data/computation{str(i).zfill(2)}.csv")
+    #     print("end iteration: ", i)
 
 
 if __name__ == "__main__":

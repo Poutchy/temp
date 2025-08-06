@@ -173,11 +173,14 @@ def main():
     graph = nx.read_edgelist(
         "rdata/graph4.csv", nodetype=int, delimiter=",", create_using=nx.DiGraph
     )
+    
+    print(graph.number_of_nodes())
+    print(graph.number_of_edges())
 
     nx.set_edge_attributes(graph, 1.0, "capacity")
 
     num_rows = 50
-    num_file = 10
+    num_file = 5
     r_l = required_length(5, 0.85)
     for i in range(num_file):
         print("start iteration: ", i)

@@ -15,10 +15,11 @@ def compute_wot_rank(trust_graph: Graph, truster: int, trustee: int) -> int:
     """
     # Compute shortest path length
 
-    rank = trust_graph.distances(source=truster, target=trustee)
+    # rank = trust_graph.distances(source=truster, target=trustee, algorithm="dijkstra")
+    rank = len(trust_graph.get_shortest_path(truster, trustee, algorithm="dijkstra"))
     # except ig:
     #     rank = -1  # float('inf')  # No path found
-    return rank[0][0]
+    return rank
 
 
 def compute_wot_capacity(rank: int) -> int:
