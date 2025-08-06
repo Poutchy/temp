@@ -1,2 +1,0 @@
-,FreeNet_pre_score,FreeNet_post_score,FreeNet_pre_rank,FreeNet_post_rank,FreeNet_delta_ranks,Reversed_pre_score,Reversed_post_score,Reversed_pre_rank,Reversed_post_rank,Reversed_delta_ranks,Random_pre_score,Random_post_score,Random_pre_rank,Random_post_rank,Random_delta_ranks,dist_victim_relayer,dist_victim_vilain_pre,dist_victim_vilain_post,out_deg_victim,in_deg_villain,victim,villain,relayer
-0,1,2,68,82,14,1,1,1,1,0,0.0,0.06405936212941217,1,95,94,[[5]],[[inf]],[[6]],1,1,69,22,19

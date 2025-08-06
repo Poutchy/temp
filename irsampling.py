@@ -1,6 +1,4 @@
 import math
-import os
-import time
 
 from igraph import Graph
 import numpy as np
@@ -92,13 +90,13 @@ def sample_datarow(graph, n_bots, req_length):
     ]
     FreeNet_post_ranks = rankdata(FreeNet_post_scores, method="min")
 
-    # print("freenet")
-    # print("  score")
-    # print("    pre", FreeNet_pre_scores)
-    # print("    pos", FreeNet_post_scores)
-    # print("  rank")
-    # print("    pre", FreeNet_pre_ranks)
-    # print("    pos", FreeNet_post_ranks)
+    print("freenet")
+    print("  score")
+    print("    pre", FreeNet_pre_scores)
+    print("    pos", FreeNet_post_scores)
+    print("  rank")
+    print("    pre", FreeNet_pre_ranks)
+    print("    pos", FreeNet_post_ranks)
 
     # Compute Reversed freenet WoT scores
     Reversed_pre_scores = [
@@ -111,13 +109,13 @@ def sample_datarow(graph, n_bots, req_length):
     ]
     Reversed_post_ranks = rankdata(Reversed_post_scores, method="min")
 
-    # print("reversed")
-    # print("  score")
-    # print("    pre", Reversed_pre_scores)
-    # print("    pos", Reversed_post_scores)
-    # print("  rank")
-    # print("    pre", Reversed_pre_ranks)
-    # print("    pos", Reversed_post_ranks)
+    print("reversed")
+    print("  score")
+    print("    pre", Reversed_pre_scores)
+    print("    pos", Reversed_post_scores)
+    print("  rank")
+    print("    pre", Reversed_pre_ranks)
+    print("    pos", Reversed_post_ranks)
 
     # Compute Random walk WoT scores
     Random_pre_scores = personalized_random_walk(
@@ -130,13 +128,13 @@ def sample_datarow(graph, n_bots, req_length):
     )
     Random_post_ranks = rankdata(Random_post_scores[:N], method="min")
 
-    # print("random")
-    # print("  score")
-    # print("    pre", Random_pre_scores)
-    # print("    pos", Random_post_scores)
-    # print("  rank")
-    # print("    pre", Random_pre_ranks)
-    # print("    pos", Random_post_ranks)
+    print("random")
+    print("  score")
+    print("    pre", Random_pre_scores)
+    print("    pos", Random_post_scores)
+    print("  rank")
+    print("    pre", Random_pre_ranks)
+    print("    pos", Random_post_ranks)
 
     datarow = {
         "FreeNet_pre_score": FreeNet_pre_scores[villain],
@@ -173,24 +171,21 @@ def sample_datarow(graph, n_bots, req_length):
 def main():
     random_state = np.random.RandomState(42)
 
-    n0 = 10  # initial nodes
-    n = 100  # number of total nodes
-    m = 2  # number of edges to attach from a new node
-    p = 0.5  # probability of adding m new edges between existing nodes
-    q = 0.3  # probability of rewiring edges
+    edges = []
+    with open("rdata/graph4.csv", "r") as f:
+        for line in f:
+            source, target = map(int, line.strip().split(","))
+            edges.append((source, target))
 
-    # n0, n, m, p, q = 10, 200, 3, 0.3, 0.4
-    # n0, n, m, p, q = 10, 1000, 3, 0.3, 0.4
-
-    graph_fname = f"data/graph_{n0}_{n}_{m}_{p}_{q}.adjlist"
-    graph = create_directed_graph_adjlist(graph_fname)
+    # Create directed graph
+    graph = Graph(edges=edges, directed=True)
     # print("start count of nodes", graph.vcount())
 
     print(graph.vcount())
     print(graph.ecount())
 
-    num_rows = 1000
-    num_file = 100
+    num_rows = 100
+    num_file = 10
     r_l = required_length(5, 0.85)
     for i in range(num_file):
         print("start iteration: ", i)
@@ -201,7 +196,7 @@ def main():
         data = pd.DataFrame(data)
         # data.head(5)
         # 30 min per iterations
-        data.to_csv(f"idata/_/computation{str(i).zfill(2)}.csv")
+        data.to_csv(f"idata/computation{str(i).zfill(2)}.csv")
         print("end iteration: ", i)
 
 
