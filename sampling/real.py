@@ -1,19 +1,21 @@
 import pandas as pd
-from networkx import DiGraph, read_edgelist, set_edge_attributes
+from networkx import set_edge_attributes
 
 from functions import required_length, sample_datarow, build_epinions_digraph_from_local
+from test_function import test_function
 
 def main():
-    # graph = build_epinions_digraph_from_local()
-    graph = read_edgelist(
-        # "rdata/graph.csv",
-        # "rdata/graph2.csv",
-        # "rdata/graph3csv",
-        "rdata/nostr_graph.csv",
-        nodetype=int,
-        delimiter=",",
-        create_using=DiGraph
-    )
+    graph = build_epinions_digraph_from_local()
+    # graph = build_epinions_digraph_from_local("rdata/twitter_combined.txt.gz")
+    # graph = read_edgelist(
+    #     # "rdata/graph.csv",
+    #     # "rdata/graph2.csv",
+    #     # "rdata/graph3csv",
+    #     "rdata/nostr_graph.csv",
+    #     nodetype=int,
+    #     delimiter=",",
+    #     create_using=DiGraph
+    # )
 
     print(graph.number_of_nodes())
     print(graph.number_of_edges())
@@ -34,6 +36,9 @@ def main():
         # 30 min per iterations
         data.to_csv(f"rdata/computation{str(i).zfill(2)}.csv")
         print("end iteration: ", i)
+
+    
+    test_function("rdata/computation*.csv")
 
 
 if __name__ == "__main__":

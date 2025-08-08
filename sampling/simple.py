@@ -58,6 +58,7 @@ def main():
         # 30 min per iterations
         data.to_csv(f"data/computation{str(i).zfill(2)}.csv")
         print("end iteration: ", i)
+        
     test_function("data/computation*.csv")
 
 
