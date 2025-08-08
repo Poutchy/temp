@@ -1,15 +1,15 @@
+from gzip import open
 from typing import List, Optional
 
-from gzip import open
 import networkx as nx
 import numpy as np
-
 from saver import BaseAdapter
 
 # random_state = np.random.RandomState(42)
 
 
 LOCAL_PATH = "rdata/soc-Epinions1.txt.gz"  # change if needed
+
 
 def build_epinions_digraph_from_local(path=LOCAL_PATH):
     G = nx.DiGraph()
@@ -25,6 +25,7 @@ def build_epinions_digraph_from_local(path=LOCAL_PATH):
             v = int(parts[1])
             G.add_edge(u, v)
     return G
+
 
 if __name__ == "__main__":
     G = build_epinions_digraph_from_local()

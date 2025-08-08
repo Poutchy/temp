@@ -31,7 +31,6 @@ def compare_score_ranks(g1, g2, truster, f1, f2, f3):
     return fin1, fin2, fin3
 
 
-
 def compute_coef(g1, g2, f1, f2, f3):
     # Compute the Spearman correlation for all nodes
     coef1 = []

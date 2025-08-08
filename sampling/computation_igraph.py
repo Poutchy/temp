@@ -45,7 +45,7 @@ def compute_wot_score(
     """
     if truster == trustee:
         return 100
-    if trustee in trust_graph.neighbors(truster, mode='out'):
+    if trustee in trust_graph.neighbors(truster, mode="out"):
         # Direct trust value exists
         # return 100 #trust_graph[truster][trustee]['weight']
 
@@ -53,7 +53,7 @@ def compute_wot_score(
     # Indirect computation
 
     score = 0
-    neighbor_of_trustee = trust_graph.neighbors(trustee, mode='in')
+    neighbor_of_trustee = trust_graph.neighbors(trustee, mode="in")
     # print("return of incident", neighbor_of_trustee)
     for neighbor in neighbor_of_trustee:
         trust_value = 100  # trust_graph[neighbor][trustee]['weight']
@@ -91,7 +91,7 @@ def compute_wot_score_rev(
     #     return trust_graph.get_edge_data(truster, trustee).get("weight", 100)
     if truster == trustee:
         return 100
-    if trustee in trust_graph.neighbors(truster, mode='out'):
+    if trustee in trust_graph.neighbors(truster, mode="out"):
         # Direct trust value exists
         # return 100 #trust_graph[truster][trustee]['weight']
 
@@ -99,7 +99,7 @@ def compute_wot_score_rev(
     # Indirect computation
 
     score = 0
-    outgoing_of_truster = trust_graph.neighbors(truster, mode='out')
+    outgoing_of_truster = trust_graph.neighbors(truster, mode="out")
     for followed in outgoing_of_truster:
         trust_value = 100  # trust_graph[truster][followed]['weight']
         rank = compute_wot_rank(trust_graph, followed, trustee)
@@ -119,6 +119,7 @@ def compute_wot_score_rev(
     #     score = round(score / len(outgoing_of_truster))
 
     return score
+
 
 rng = np.random.RandomState(42)  # Use the existing random_state variable
 
@@ -163,7 +164,7 @@ def personalized_random_walk(graph, rng, source_node, max_steps, alpha=0.85):
             node = source_node  # reset
         # pick a random successor node from graph.node
 
-        successors = list(graph.neighbors(node, mode='out'))
+        successors = list(graph.neighbors(node, mode="out"))
         if successors:
             node = rng.choice(successors)
             prob[node] += 1

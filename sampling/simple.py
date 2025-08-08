@@ -1,13 +1,12 @@
 import os
 import time
-
 from glob import glob
+
 import networkx as nx
 import pandas as pd
-from numpy.random import RandomState
-
 # from computation.graph import extended_barabasi_albert_digraph
 from functions import required_length, sample_datarow
+from numpy.random import RandomState
 from test_function import test_function
 
 
@@ -25,7 +24,6 @@ def main():
 
     graph_fname = f"data/graph_{n0}_{n}_{m}_{p}_{q}.adjlist"
     print("Graph filename:", graph_fname)
-
 
     graph = nx.read_adjlist(graph_fname, nodetype=int, create_using=nx.DiGraph)
     nx.set_edge_attributes(graph, 1.0, "capacity")
@@ -58,7 +56,7 @@ def main():
         # 30 min per iterations
         data.to_csv(f"data/computation{str(i).zfill(2)}.csv")
         print("end iteration: ", i)
-        
+
     test_function("data/computation*.csv")
 
 

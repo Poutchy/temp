@@ -3,11 +3,12 @@ from os import makedirs
 from typing import Literal, Union
 
 from networkx import DiGraph
+from scipy.stats import rankdata
 
 from computation import (compute_wot_score, compute_wot_score_indep,
                          compute_wot_score_rev)
 from plotting import plot_multi_computation, plot_single_computation
-from scipy.stats import rankdata
+
 
 @dataclass
 class SingleScoreComputation:
@@ -23,14 +24,12 @@ class ScoreComputation:
     def __init__(
         self, scores_normal: list[tuple[int, int]], scores_attack: list[tuple[int, int]]
     ) -> None:
-        ranks = rankdata([s for _,s in scores_normal])
-        self.dict_normal = { n: ranks[i] for i, (n, _) in enumerate(scores_normal)}
-        ranks = rankdata([s for _,s in scores_attack])
-        self.dict_attack = { n: ranks[i] for i, (n, _) in enumerate(scores_attack)}
+        ranks = rankdata([s for _, s in scores_normal])
+        self.dict_normal = {n: ranks[i] for i, (n, _) in enumerate(scores_normal)}
+        ranks = rankdata([s for _, s in scores_attack])
+        self.dict_attack = {n: ranks[i] for i, (n, _) in enumerate(scores_attack)}
 
-    def get_rank(
-        self, node: int, mode: Literal["normal", "attack"]
-    ) -> int:
+    def get_rank(self, node: int, mode: Literal["normal", "attack"]) -> int:
         target_dict = self.dict_normal if mode == "normal" else self.dict_attack
         if node in target_dict.keys():
             return target_dict[node]

@@ -2,7 +2,8 @@ import numpy as np
 import pandas as pd
 
 from sampling.functions import required_length
-from sampling.functions_igraph import create_directed_graph_adjlist, sample_datarow
+from sampling.functions_igraph import (create_directed_graph_adjlist,
+                                       sample_datarow)
 
 
 def main():

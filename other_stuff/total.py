@@ -2,10 +2,11 @@ import json
 
 import numpy as np
 
-from computation.graph import GraphAdapter, add_bad_guys, extended_barabasi_albert_digraph
+from computation.graph import (GraphAdapter, add_bad_guys,
+                               extended_barabasi_albert_digraph)
+from computation.saver import load, save
 from other_stuff.group_data import prepare_plotting
 from plotting import compare_all_result, compare_single_result
-from computation.saver import load, save
 
 with open("config.json", "r", encoding="utf-8") as jsonfile:
     data = json.load(jsonfile)

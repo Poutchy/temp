@@ -1,8 +1,9 @@
 import pandas as pd
+from functions import (build_epinions_digraph_from_local, required_length,
+                       sample_datarow)
 from networkx import set_edge_attributes
-
-from functions import required_length, sample_datarow, build_epinions_digraph_from_local
 from test_function import test_function
+
 
 def main():
     graph = build_epinions_digraph_from_local()
@@ -37,7 +38,6 @@ def main():
         data.to_csv(f"rdata/computation{str(i).zfill(2)}.csv")
         print("end iteration: ", i)
 
-    
     test_function("rdata/computation*.csv")
 
 

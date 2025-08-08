@@ -1,11 +1,9 @@
 import os
 import time
 
-
 import networkx as nx
 import numpy as np
 import pandas as pd
-
 from functions import required_length, sample_datarow
 from test_function import test_function
 
@@ -53,9 +51,8 @@ def main():
         # 30 min per iterations
         data.to_csv(f"bdata/computation{str(i).zfill(2)}.csv")
         print("end iteration: ", i)
-        
+
     test_function("data/computation*.csv")
-    
 
 
 if __name__ == "__main__":

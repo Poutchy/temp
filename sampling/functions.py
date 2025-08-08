@@ -1,18 +1,15 @@
+from gzip import open
 from math import pow
 
-from gzip import open
 from networkx import DiGraph, NetworkXNoPath, shortest_path_length
 from numpy.random import RandomState, choice
 from scipy.stats import rankdata
 
-from computation import (
-    compute_wot_score,
-    compute_wot_score_indep,
-    compute_wot_score_rev,
-    personalized_random_walk,
-)
+from computation import (compute_wot_score, compute_wot_score_indep,
+                         compute_wot_score_rev, personalized_random_walk)
 
 LOCAL_PATH = "rdata/soc-Epinions1.txt.gz"  # change if needed
+
 
 def build_epinions_digraph_from_local(path=LOCAL_PATH):
     G = DiGraph()
@@ -28,6 +25,7 @@ def build_epinions_digraph_from_local(path=LOCAL_PATH):
             v = int(parts[1])
             G.add_edge(u, v)
     return G
+
 
 def get_distance_in_graph(trust_graph, truster, trustee):
     try:
@@ -158,6 +156,10 @@ def sample_datarow(graph, n_bots, req_length):
         "dist_victim_vilain_post": get_distance_in_graph(graph_post, victim, villain),
         "out_deg_victim": graph_pre.out_degree(victim),
         "in_deg_villain": graph_pre.in_degree(villain),
+        "pre_number_of_nodes": graph_pre.number_of_nodes(),
+        "pre_number_of_edges": graph_pre.number_of_edges(),
+        "post_number_of_nodes": graph_post.number_of_nodes(),
+        "post_number_of_edges": graph_post.number_of_edges(),
         "victim": victim,
         "villain": villain,
         "relayer": relayer,

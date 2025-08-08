@@ -1,12 +1,8 @@
+from computation_igraph import (compute_wot_score, compute_wot_score_rev,
+                                personalized_random_walk)
 from igraph import Graph
 from numpy.random import RandomState, choice
 from scipy.stats import rankdata
-
-from computation_igraph import (
-    compute_wot_score,
-    compute_wot_score_rev,
-    personalized_random_walk,
-)
 
 
 def read_adj_list_adjlist(filename: str) -> tuple[int, list[tuple[int, int]]]:
