@@ -5,4 +5,4 @@ numpy
 rich
 igraph
 pandas
-
+ipykernel
